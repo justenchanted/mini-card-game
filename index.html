@@ -7,9 +7,11 @@
 <canvas id="gameCanvas" width="800" height="600" style="border:1px solid black;"></canvas>
 
 <script>
+// ========== SETUP ==========
 const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
+// List of card images (your existing filenames)
 let cards = [
     'https://github.com/justenchanted/mini-card-game/blob/main/Unbenanntes_Projekt%202.png?raw=true',
     'https://github.com/justenchanted/mini-card-game/blob/main/Unbenanntes_Projekt.png?raw=true'
@@ -20,22 +22,27 @@ let flipProgress = 1;  // 1 = full width, 0 = invisible
 let flipping = false;
 let nextCard = 0;
 
+// Load first card
 const img = new Image();
 img.src = cards[currentCard];
 img.onload = drawCard;
 
-// drawCard function with scaling
+// ========== DRAW CARD FUNCTION ==========
 function drawCard() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height); // clear everything
+    ctx.clearRect(0, 0, canvas.width, canvas.height); // clear canvas
+
+    // Optional: background
+    ctx.fillStyle = 'lightblue';
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
 
     ctx.save();
-    ctx.translate(400, 275); // move origin to center of card
-    ctx.scale(flipProgress, 1); // scale width
-    ctx.drawImage(img, -100, -75, 200, 150); // draw centered
+    ctx.translate(400, 275); // move to card center
+    ctx.scale(flipProgress, 1); // shrink/expand width
+    ctx.drawImage(img, -100, -75, 200, 150); // draw card centered
     ctx.restore();
 }
 
-// click listener to start the flip
+// ========== CLICK HANDLER ==========
 canvas.addEventListener('click', () => {
     if (!flipping) {
         flipping = true;
@@ -44,7 +51,7 @@ canvas.addEventListener('click', () => {
     }
 });
 
-// animation to shrink card width
+// ========== ANIMATION FUNCTIONS ==========
 function animateFlip() {
     if (flipProgress > 0) {
         flipProgress -= 0.1; // shrink
@@ -57,36 +64,15 @@ function animateFlip() {
     }
 }
 
-// animation to grow card width
 function animateFlipBack() {
     if (flipProgress < 1) {
         flipProgress += 0.1; // grow
         drawCard();
         requestAnimationFrame(animateFlipBack);
     } else {
-        flipping = false; // done
+        flipping = false; // animation finished
     }
 }
-
-// Load first card
-const img = new Image();
-img.src = cards[currentCard];
-img.onload = drawCard;
-
-function drawCard() {
-    // Clear canvas
-    ctx.fillStyle = 'lightblue';
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-    // Draw card
-    ctx.drawImage(img, 300, 200, 200, 150);
-}
-
-// Flip card on click
-canvas.addEventListener('click', () => {
-    currentCard = (currentCard + 1) % cards.length; // go to next card
-    img.src = cards[currentCard]; // load new image
-});
 </script>
 </body>
 </html>

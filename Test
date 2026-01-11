@@ -11,8 +11,8 @@ const canvas = document.getElementById('gameCanvas');
 const ctx = canvas.getContext('2d');
 
 let cards = [
-    'https://github.com/YOURUSERNAME/mini-card-game/blob/main/card1.png?raw=true',
-    'https://github.com/YOURUSERNAME/mini-card-game/blob/main/card2.png?raw=true'
+    'https://github.com/justenchanted/mini-card-game/blob/main/Unbenanntes_Projekt%202.png?raw=true',
+    'https://github.com/justenchanted/mini-card-game/blob/main/Unbenanntes_Projekt.png?raw=true'
 ];
 
 let currentCard = 0;
